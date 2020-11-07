@@ -32,4 +32,7 @@ router.post('/login', userControl.loginUser);
 
 router.get('/verify', userControl.verifiedToken);
 
+//router.get('/state', userControl.getState);
+//router.put('/state', userControl.setState);
+
 module.exports = router;

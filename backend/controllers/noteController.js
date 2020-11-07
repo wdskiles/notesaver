@@ -1,9 +1,10 @@
-const Notes = require('../models/note.model');
+const Note = require('../models/note.model');
 
 const noteController = {
     getNotes: async (req, res) => {
         try {
-            const notes = await Notes.find({user_id: req.user.id});
+            const notes = await Note.find({user_id: req.user.id});
+            res.json(notes);
         } catch (err) {
             return res.status(400).json('Error: ' + err);
         }
@@ -11,14 +12,17 @@ const noteController = {
 
     createNote: async (req, res) => {
         try {
-            const {title, content, date} = req.body;
+            const {title, content, category, date} = req.body;
             const newNote = new Note({
                 title,
                 content,
                 date,
+                category,
                 user_id: req.user.id,
                 name: req.user.name
             });
+            await newNote.save();
+            res.json({msg: "Note Created!"});
         } catch (err) {
             return res.status(400).json('Error: ' + err);
         }
@@ -26,7 +30,7 @@ const noteController = {
 
     deleteNote: async (req, res) => {
         try {
-            await Notes.findByIdAndDelete(req.params.id);
+            await Note.findByIdAndDelete(req.params.id);
         } catch (err) {
             return res.status(400).json('Error: ' + err);
         }
@@ -34,11 +38,12 @@ const noteController = {
 
     updateNote: async (req, res) => {
         try {
-            const {title, content, date} = req.body;
-            await Notes.findOneAndUpdate({_id: req.params.id}, {
+            const {title, content, date, category} = req.body;
+            await Note.findOneAndUpdate({_id: req.params.id}, {
                 title,
                 content,
-                date
+                date,
+                category
             });
         } catch (err) {
             return res.status(400).json('Error: ' + err);
@@ -47,9 +52,12 @@ const noteController = {
 
     getNote: async (req, res) => {
         try {
-            const note = await Notes.findById(req.params.id);
+            const note = await Note.findById(req.params.id);
+            res.json(note);
         } catch (err) {
             return res.status(400).json('Error: ' + err);
         }
     }
 }
+
+module.exports = noteController;

@@ -5,23 +5,22 @@ const Schema = mongoose.Schema;
 const noteSchema = new Schema({
   title: {
     type: String,
-    required: true,
-    trim: true,
-    minlength: 3
+    required: true
   },
   content: { 
-    type: String 
+    type: String,
+    required: true
   },
   category: { 
-    type: String 
+    type: String,
+    required: true
   },
   user_id: { 
     type: String, 
     required: true 
   },
   date: { 
-    type: Date, 
-    required: true, 
+    type: Date,  
     default: Date.now
   },
   name: {
@@ -32,6 +31,4 @@ const noteSchema = new Schema({
   timestamps: true,
 });
 
-const Note = mongoose.model('Note', noteSchema);
-
-module.exports = Note;
+module.exports = mongoose.model('Note', noteSchema);;

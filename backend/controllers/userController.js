@@ -52,7 +52,6 @@ const userControl = {
             const token = jwt.sign(payload, process.env.TOKEN_SECRET, {expiresIn: "1d"});
 
             res.json({token});
-            //res.json({msg: ""});
         } catch (err) {
             res.status(500).json('Error: ' + err);
         }
@@ -80,7 +79,27 @@ const userControl = {
         } catch (err) {
             res.status(500).json('Error: ' + err);
         }
-    }
+    },
+
+    /*getState: (req, res) => {
+        try {
+            const sort = User.find({user_id: req.user.id});
+            res.json(sort.sort);
+        } catch (err) {
+            return res.status(400).json('Error: ' + err);
+        }
+        User.find({sort: sort});
+    },
+
+    setSort: (req, res) => {
+        try {
+            const sort_id = req.body;
+            res.json(sort.sort);
+        } catch (err) {
+            return res.status(400).json('Error: ' + err);
+        }
+        User.find({sort: sort});
+    }*/
 }
 
 module.exports = userControl;
