@@ -15,6 +15,7 @@ export default function Navbar({setIsLogin}) {
       <ul className="navbar-nav mr-auto">
         <li className="navbar-item"><Link to="/" className="nav-link">Home</Link></li>
         <li className="navbar-item"><Link to="/create" className="nav-link">Create Note</Link></li>
+        <li className="navbar-item"><Link to="/reset" className="nav-link">Reset Password</Link></li>
         <li onClick={logoutSubmit} className="navbar-item"><Link to="/" className="nav-link">Log Out</Link></li>
       </ul>
       </div>

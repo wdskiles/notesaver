@@ -8,8 +8,6 @@ router.route('/')
   .put(auth, sortController.updateSort);
 
   router.route('/:id')
-  //.get(auth, sortController.getNote)
-  //.put(auth, sortController.updateSort)
   .delete(auth, sortController.deleteSort);
 
 module.exports = router;

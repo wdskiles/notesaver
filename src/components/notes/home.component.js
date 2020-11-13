@@ -53,15 +53,15 @@ export default function Home() {
                 if(res.data) {
                     if(sort === 0) {
                         setNotes(res.data.sort((a,b) => (a.date > b.date) ? -1: 1));
-                        console.log("Sorting by date");
+                        //console.log("Sorting by date");
                     }
                     if(sort === 1) {
                         setNotes(res.data.sort((a,b) => (a.title > b.title) ? 1: -1));
-                        console.log("Sorting by name");
+                        //console.log("Sorting by name");
                     }
                     if(sort === 2) {
                         setNotes(res.data.sort((a,b) => (a.category > b.category) ? 1: -1));
-                        console.log("Sorting by category");
+                        //console.log("Sorting by category");
                     }
                     //console.log(res.data);   
                 }
@@ -178,15 +178,18 @@ export default function Home() {
             <div className="note-wrapper home">
                
                 <div className="sorter">
-                    <p>Sorting: 
+                    <p>Sorting:
+                    <div class="divider"/>
                     <button onClick={() => {
-                        sortByDate();//.then(setTimeout(function(){window.location.reload()}, 30000));
+                        sortByDate();
                     }}>Date</button>
+                    <div class="divider"/>
                     <button onClick={() => {
-                        sortAlphabetically();//.then(setTimeout(function(){window.location.reload()}, 30000));
+                        sortAlphabetically();
                     }}>Alphabetically</button>
+                    <div class="divider"/>
                     <button onClick={() => {
-                        sortByCategory();//.then(setTimeout(function(){window.location.reload()}, 30000));
+                        sortByCategory();
                     }}>Category</button>
                     </p>
                 </div>
@@ -206,8 +209,7 @@ export default function Home() {
                                 <Link to={`edit/${note._id}`}> Edit</Link>
                             </div>
                             <button className="close" onClick={() => {
-                                deleteNote(note._id);
-                                window.location.reload();}}>X</button>
+                                deleteNote(note._id);}}>X</button>
                         </div>
                     ))
                 }

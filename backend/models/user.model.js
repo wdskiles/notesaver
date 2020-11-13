@@ -13,16 +13,15 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-
   email: {
     type: String,
     required: true,
     unique: true
-  },
-
-  sort_id: {
-    type: String
   }
+// Old sorting stuff
+//  sort_id: {
+//    type: String
+//  }
 }, {
   timestamps: true,
 });

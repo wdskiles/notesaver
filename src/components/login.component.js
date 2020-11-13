@@ -45,27 +45,40 @@ export default function Login({setIsLogin}) {
             err.response.data.msg && setErr(err.response.data.msg);
         }
     };
-
-    const resetSubmit = async e =>{
+    
+    // For Possible Reset Password system
+    /*const resetSubmit = async e =>{
         e.preventDefault();
-    }
+        try {
+            const res = await axios.post('/users/reset-password', {
+                email: user.email
+            });
+            SetUser({name: '', email: '', password: ''});
+            setErr(res.data.msg);
+        } catch (err) {
+            err.response.data.msg && setErr(err.response.data.msg);
+        }
+    }*/
 
     const [onLogin, setOnLogin] = useState(false);
-    const [onReset, setOnReset] = useState(false);
+
+    // For Possible Reset Password system
+    //const [onReset, setOnReset] = useState(false);
     const registerStyle = {
-        visibility: onReset ? "hidden" : onLogin ? "visible" : "hidden",
-        opacity: onReset ? 0 : onLogin ? 1 : 0
+        visibility: onLogin ? "visible" : "hidden",
+        opacity: onLogin ? 1 : 0
     };
 
     const loginStyle = {
-        visibility: onReset ? "hidden" : onLogin ? "hidden" : "visible",
-        opacity: onReset ? 0 : onLogin ? 0 : 1
+        visibility: onLogin ? "hidden" : "visible",
+        opacity: onLogin ? 0 : 1
     };
 
-    const resetStyle = {
+    // For Possible Reset Password system
+    /*const resetStyle = {
         visibility: onReset ? "visible" : "hidden",
         opacity: onReset ? 1 : 0
-    };
+    };*/
 
     return (
         <section className="login-page">
@@ -83,10 +96,7 @@ export default function Login({setIsLogin}) {
                             Don't have an account?
                             <span onClick={() => setOnLogin(true)}> Register Here</span>
                         </p>
-                        <p>
-                            Forgot your password or want to reset it?
-                            <span onClick={() => setOnReset(true)}> Reset Here</span>
-                        </p>
+                        
                         <h3>{err}</h3>
                     </form>
             </div>
@@ -107,27 +117,36 @@ export default function Login({setIsLogin}) {
                             Already have an account?
                             <span onClick={() => setOnLogin(false)}> Login</span>
                         </p>
-                        <p>
-                            Already have an account but you forgot your password or want to reset it?
-                            <span onClick={() => setOnReset(true)}> Reset Here</span>
-                        </p>
-                        <h3>{err}</h3>
-                    </form>
-            </div>
-            <div className="login create-note" style={resetStyle}>
-                <h2>Reset Password</h2>
-                    <form  onSubmit={resetSubmit}>
-                        <input type="email" name="email" id="reset-email" placeholder="Email" required value={user.email}
-                        onChange={onChangeInput} />
-
-                        <button type="submit">Send Reset Email</button>
-                        <p>
-                            Remember your password?
-                            <span onClick={() => setOnReset(false)}> Login Here</span>
-                        </p>
+                        
                         <h3>{err}</h3>
                     </form>
             </div>
         </section>
     );
 }
+
+// Old Reset Password via email html
+// <p>Forgot your password or want to reset it?<span onClick={() => setOnReset(true)}> Reset Here</span></p>
+// <p>Already have an account but you forgot your password or want to reset it?<span onClick={() => setOnReset(true)}> Reset Here</span></p>
+/* 
+    <div className="login create-note" style={resetStyle}>
+            <h2>Reset Password</h2>
+                <form  onSubmit={resetSubmit}>
+                    <input type="email" name="email" id="reset-email" placeholder="Email" required value={user.email}
+                    onChange={onChangeInput} />
+
+                    <button type="submit">Send Reset Email</button>
+                    <p>
+                        Don't have an account?
+                        <span onClick={() => {
+                            setOnLogin(true);
+                            setOnReset(false);}}> Register Here</span>
+                    </p>
+                    <p>
+                        Remember your password?
+                        <span onClick={() => setOnReset(false)}> Login Here</span>
+                    </p>
+                    <h3>{err}</h3>
+                </form>
+        </div>
+*/

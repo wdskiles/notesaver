@@ -48,12 +48,30 @@ a {
 .home {
   padding-top: 30px;
 }
+
 .sorter {
   position: absolute;
   top: 12%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-40%, -50%);
 
+}
+
+.sorter p {
+  overflow: hidden;
+  width: 350px;
+}
+
+.divider{
+  width:5px;
+  height:auto;
+  display:inline-block;
+}
+
+@media (max-width: 991px) {
+  .sorter {
+    top: 35%;
+  }
 }
 .note-wrapper {
   max-width: 1920px;
@@ -62,8 +80,6 @@ a {
   justify-content: space-around;
   margin: auto;
 }
-
-
 
 .card {
   width: 300px;
@@ -182,6 +198,14 @@ a {
 .login, .register {
   position: absolute;
   top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+}
+
+.reset {
+  position: absolute;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   background: white;
