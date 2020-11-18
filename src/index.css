@@ -59,7 +59,11 @@ a {
 
 .sorter p {
   overflow: hidden;
-  width: 350px;
+  width: 400px;
+}
+
+.sorter button {
+  margin: 5px;
 }
 
 .divider{
@@ -127,16 +131,6 @@ a {
   color: black;
 }
 
-.card .category {
-  text-align: right;
-  color: black;
-}
-
-.card .no-category {
-  text-align: right;
-  color: transparent;
-}
-
 .card-footer {
   display: flex;
   justify-content: space-between;
@@ -157,6 +151,10 @@ a {
 .create-note .row {
   width: 100%;
   margin: 10px 0;
+}
+
+.dropdown {
+  justify-content: space-between;
 }
 
 .create-note input,
@@ -203,16 +201,21 @@ a {
   background: white;
 }
 
+.login-page h3{
+  text-align: center;
+  text-transform: uppercase;
+  margin-top: 15px;
+}
+
+/* Reset */
 .reset {
   position: absolute;
-  top: 40%;
+  top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
   background: white;
 }
 
-.login-page h3{
-  text-align: center;
-  text-transform: uppercase;
-  margin-top: 15px;
+.reset button {
+  margin-top: 20px;
 }

@@ -5,6 +5,7 @@ import axios from 'axios';
 
 export default function Home() {
     const [notes, setNotes] = useState([]);
+    const [notesSet, setNotesSet] = useState(false);
     const [token, setToken] = useState('');
     const [sort, setSort] = useState();
     const [shouldRefresh, setShouldRefresh] = useState(false);
@@ -50,17 +51,20 @@ export default function Home() {
             }
             //console.log(sort);
             if (mounted) {
-                if(res.data) {
+                if(res.data && !notesSet) {
                     if(sort === 0) {
                         setNotes(res.data.sort((a,b) => (a.date > b.date) ? -1: 1));
+                        setNotesSet(true);
                         //console.log("Sorting by date");
                     }
                     if(sort === 1) {
                         setNotes(res.data.sort((a,b) => (a.title > b.title) ? 1: -1));
+                        setNotesSet(true);
                         //console.log("Sorting by name");
                     }
                     if(sort === 2) {
                         setNotes(res.data.sort((a,b) => (a.category > b.category) ? 1: -1));
+                        setNotesSet(true);
                         //console.log("Sorting by category");
                     }
                     //console.log(res.data);   
@@ -77,7 +81,7 @@ export default function Home() {
             }
         }
         return () => mounted = false;
-    }, [setToken, sort, checkForRefresh]);
+    }, [setToken, sort, checkForRefresh, notesSet]);
 
     const deleteNote = async (id) => {
         let mounted = true;
@@ -179,15 +183,15 @@ export default function Home() {
                
                 <div className="sorter">
                     <p>Sorting:
-                    <div class="divider"/>
+                    
                     <button onClick={() => {
                         sortByDate();
-                    }}>Date</button>
-                    <div class="divider"/>
+                    }}>Date Created</button> 
+                    
                     <button onClick={() => {
                         sortAlphabetically();
                     }}>Alphabetically</button>
-                    <div class="divider"/>
+                    
                     <button onClick={() => {
                         sortByCategory();
                     }}>Category</button>

@@ -6,7 +6,7 @@ export default function CreateNote() {
     const [note, setNote] = useState({
         title: '',
         content: '',
-        category: ''
+        category: 'Grocery'
     });
 
     const history = useHistory();
@@ -45,11 +45,17 @@ export default function CreateNote() {
                 </div>
                 <div className="row">
                     <label htmlFor="content">Content</label>
-                    <textarea type="text" value={note.content} id="content" name="content" required row="10" onChange={onChangeInput} />
+                    <textarea type="text" value={note.content} id="content" name="content" required rows="10" onChange={onChangeInput} />
                 </div>
-                <div className="row">
+                <div className="row dropdown">
                     <label htmlFor="category">Category</label>
-                    <input type="text" value={note.category} id="category" name="category" required onChange={onChangeInput} />
+                    <select type="text" value={note.category} id="category" name="category" required onChange={onChangeInput}>
+                        <option value="Grocery">Grocery</option>
+                        <option value="Important Information">Important Information</option>
+                        <option value="Account Passwords">Account Passwords</option>
+                        <option value="Todo List">Todo List</option>
+                        <option value="Other">Other</option>
+                    </select>
                 </div>
 
                 <button type="submit">Create</button>

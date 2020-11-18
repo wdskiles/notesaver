@@ -8,12 +8,7 @@ const userControl = {
         try {
             const username = req.body.username;
             const password = req.body.password;
-            const email = req.body.email;
-        
-            const useremail = await User.findOne({email: email});
-            if (useremail) {
-                return res.status(400).json({msg: "This email is already in use."});
-            }
+
             const usernamecheck = await User.findOne({username: username});
             if (usernamecheck) {
                 return res.status(400).json({msg: "This username is already in use."});
@@ -22,8 +17,7 @@ const userControl = {
             const passwordHash = await bcrypt.hash(password, 10);
             const newUser = new User({
                 username: username,
-                password: passwordHash,
-                email: email
+                password: passwordHash
             });
         
             await newUser.save();
@@ -35,12 +29,12 @@ const userControl = {
 
     loginUser: async (req, res) => {
         try {
-            const email = req.body.email;
+            const username = req.body.username;
             const password = req.body.password;
-            const user = await User.findOne({email: email});
+            const user = await User.findOne({username: username});
             if (!user)
             {
-                return res.status(400).json({msg: "Email is incorrect. Please try again."});
+                return res.status(400).json({msg: "Username is incorrect. Please try again."});
             }
 
             const passIsMatch = await bcrypt.compare(password, user.password);
@@ -60,61 +54,26 @@ const userControl = {
 
     resetPassword: async (req, res) => {
         try {
-            console.log(req.body);
             const {newPassword, username, userPassword} = req.body;
-            //const {username} = req.body.username;
 
-            const user = await User.findOne({email: username});
+            const user = await User.findOne({username: username});
             if (!user)
             {
-                return res.json({msg: "Email is incorrect. Please try again."});
+                return res.json({msg: "Username is incorrect. Please try again."});
             }
             const passIsMatch = await bcrypt.compare(userPassword, user.password);
             if (!passIsMatch)
             {
                 return res.json({msg: "Old Password is incorrect. Please try again."});
             }
-
-            console.log(newPassword);
             hashedPassword = await bcrypt.hash(newPassword, 10);
-            await User.findOneAndUpdate({email: username}, {password: hashedPassword})
+            await User.findOneAndUpdate({username: username}, {password: hashedPassword})
             .then(res.json({msg: "Password successfully reset!"}));
         } catch (err) {
             console.log(err);
             return res.status(400).json('Error: ' + err);
         }
     },
-
-    // Old resetPassword for using email
-    /*resetPassword: (req, res) => {
-        crypto.randomBytes(32, (error, buffer) => {
-            if (error) {
-                console.log(err);
-            }
-            const token = buffer.toString("hex");
-            User.findOne({email: req.body.email})
-            .then(user =>{
-                if (!user) {
-                    return res.status(422).json({error: "There is no user with that email."});
-                }
-                user.resetToken = token;
-                user.expireToken = Date.now() + 3600000; // Makes token valid for 1 hour
-                user.save().then((result) => {
-                    transporter.sendMail({
-                        to: user.email,
-                        from: "no-reply@notesaver.com",
-                        subject: "Password Reset for Notesaver",
-                        html: `
-                        <p>A password reset was requested for the account associated with this email address.</p>
-                        <h5>Click <a href="http://localhost:3000/reset/${token}">here</a> to reset your password.</h5> 
-                        <p>If you did not request the password reset, feel free to ignore this email.</p>
-                        `
-                    });
-                    res.json({message: "Password Reset request sent. Please check your email for a password reset link."});
-                })
-            });
-        })
-    },*/
 
     verifiedToken: (req, res) => {
         try {

@@ -1,4 +1,3 @@
-const { Int32 } = require('mongodb');
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
@@ -12,16 +11,7 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true
   }
-// Old sorting stuff
-//  sort_id: {
-//    type: String
-//  }
 }, {
   timestamps: true,
 });

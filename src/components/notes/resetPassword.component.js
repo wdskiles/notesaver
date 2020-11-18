@@ -4,9 +4,8 @@ import axios from 'axios';
 
 export default function ResetPassword() {
     const [userPassword, SetUserPassword] = useState();
-
     const [newPassword, SetNewPassword] = useState();
-
+    const [newPasswordCheck, SetNewPasswordCheck] = useState();
     const [username, SetUserName] = useState();
 
     const [err, setErr] = useState('');
@@ -30,18 +29,27 @@ export default function ResetPassword() {
         setErr('');
     };
 
+    const onChangeInputNewPasswordCheck = e =>{
+        const {value} = e.target;
+        SetNewPasswordCheck(value);
+        setErr('');
+    };
+
     const resetSubmit = async e =>{
         e.preventDefault();
         const token = localStorage.getItem('tokenStore');
-        console.log(newPassword);
         const data = {userPassword, newPassword, username};
         try {
-            
-            const res = await axios.put(`/users/reset-password/`, data, {
-                headers:{Authorization: token}
-            });
-            setErr(res.data.msg);
-            //history.push('/');
+            var passCheck = newPassword.localeCompare(newPasswordCheck);
+            if (passCheck == 0) {
+                const res = await axios.put(`/users/reset-password/`, data, {
+                    headers:{Authorization: token}
+                });
+                setErr(res.data.msg);
+            }
+            else {
+                setErr("New password fields do not match. Please try again.")
+            }
         } catch (err) {
             err.response.data.msg && setErr(err.response.data.msg);
         }
@@ -51,16 +59,20 @@ export default function ResetPassword() {
         <section className="login-page">
             <div className="reset create-note">
                 <h2>Reset Password</h2>
-                    <p>Please enter your email here.</p>
+                    <p>Please enter your username here.</p>
                     <form onSubmit={resetSubmit}>
-                        <input type="text" id="username" name="username" placeholder="Email"
+                        <input type="text" id="username" name="username" placeholder="Username"
                         required onChange={onChangeInputUserName} />
-                        <p>Please enter your current password here.</p>
+                        <p><br></br>Please enter your current password here.</p>
                         <input type="password" name="password" id="password" placeholder="Current Password" 
                         required autoComplete="true" onChange={onChangeInputCurrentPassword} />
-                        <p>Please enter your new password here.</p>
+                        <p><br></br>Please enter your new password here.</p>
                         <input type="password" name="newPassword" id="newPassword" placeholder="New Password" 
                         required autoComplete="true" onChange={onChangeInputNewPassword} />
+
+                        <p><br></br>Please confirm your password here.</p>
+                        <input type="password" name="newPasswordCheck" id="newPasswordCheck" placeholder="Confirm New Password" 
+                        required autoComplete="true" onChange={onChangeInputNewPasswordCheck} />
 
                         <button type="submit">Reset Password</button>
                         <h3>{err}</h3>
