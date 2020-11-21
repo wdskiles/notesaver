@@ -4,10 +4,9 @@ import React, {useState} from 'react';
 export default function Login({setIsLogin}) {
     const [user, SetUser] = useState({
         name: '',
-        password: ''
+        password: '',
+        check: ''
     });
-
-    const [passwordCheck, SetPasswordCheck] = useState();
 
     const [err, setErr] = useState('');
 
@@ -17,24 +16,17 @@ export default function Login({setIsLogin}) {
         setErr('');
     };
 
-    const onChangeInputPasswordCheck = e =>{
-        const {value} = e.target;
-        SetPasswordCheck(value);
-        setErr('');
-    };
-
     const registerSubmit = async e =>{
         e.preventDefault();
         try {
-            var passCheck = user.password.localeCompare(passwordCheck);
-            if (passCheck == 0)
+            var passCheck = user.password.localeCompare(user.check);
+            if (passCheck === 0)
             {
                 const res = await axios.post('/users/register', {
                     username: user.name,
                     password: user.password
                 });
-                SetUser({name: '', password: ''});
-                SetPasswordCheck('');
+                SetUser({name: '', password: '', check: ''});
                 setErr(res.data.msg);
             }
             else {
@@ -49,7 +41,7 @@ export default function Login({setIsLogin}) {
         e.preventDefault();
         try {
             const res = await axios.post('/users/login', {
-                username: user.username,
+                username: user.name,
                 password: user.password
             });
             SetUser({name: '', password: ''});
@@ -77,7 +69,7 @@ export default function Login({setIsLogin}) {
             <div className="login create-note" style={loginStyle}>
                 <h2>Login</h2>
                     <form  onSubmit={loginSubmit}>
-                        <input type="username" name="username" id="login-username" placeholder="username" required value={user.username}
+                        <input type="text" name="name" id="login-username" placeholder="Username" required value={user.username}
                         onChange={onChangeInput} />
 
                         <input type="password" name="password" id="login-password" placeholder="Password" 
@@ -101,8 +93,8 @@ export default function Login({setIsLogin}) {
                         <input type="password" name="password" id="register-password" placeholder="Password" 
                         required value={user.password} autoComplete="true" onChange={onChangeInput} />
 
-                        <input type="password" name="passwordCheck" id="passwordCheck" placeholder="Confirm Password" 
-                        required value={passwordCheck}autoComplete="true" onChange={onChangeInputPasswordCheck} />
+                        <input type="password" name="check" id="passwordCheck" placeholder="Confirm Password" 
+                        required value={user.check} autoComplete="true" onChange={onChangeInput} />
 
                         <button type="submit">Register</button>
                         <p>

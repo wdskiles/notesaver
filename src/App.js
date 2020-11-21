@@ -15,7 +15,7 @@ function App() {
         const token = localStorage.getItem('tokenStore');
         if (token) {
           const verified = await axios.get('/users/verify', {
-            headers:{ Authorization: token}
+            headers:{ Authorization: token }
           });
           console.log(verified);
           setIsLogin(verified.data);

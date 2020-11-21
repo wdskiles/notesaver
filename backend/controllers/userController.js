@@ -24,6 +24,7 @@ const userControl = {
             res.json({msg: "User successfully registered!"});
         } catch (err) {
             res.status(500).json('Error: ' + err);
+            
         }
     },
 

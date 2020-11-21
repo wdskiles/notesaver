@@ -58,7 +58,7 @@ export default function Home() {
                         //console.log("Sorting by date");
                     }
                     if(sort === 1) {
-                        setNotes(res.data.sort((a,b) => (a.title > b.title) ? 1: -1));
+                        setNotes(res.data.sort((a,b) => a.title.localeCompare(b.title, undefined, {sensitivity: 'base'})));
                         setNotesSet(true);
                         //console.log("Sorting by name");
                     }
@@ -89,9 +89,7 @@ export default function Home() {
             if (token && mounted) {
                 await axios.delete(`api/notes/${id}`, {
                     headers: {Authorization: token}
-                }).then(() => {
-                    window.location.reload();
-                });
+                }).then(setShouldRefresh(true));
             }
         } catch (error) {
             window.location.href= "/";

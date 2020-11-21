@@ -41,7 +41,7 @@ export default function ResetPassword() {
         const data = {userPassword, newPassword, username};
         try {
             var passCheck = newPassword.localeCompare(newPasswordCheck);
-            if (passCheck == 0) {
+            if (passCheck === 0) {
                 const res = await axios.put(`/users/reset-password/`, data, {
                     headers:{Authorization: token}
                 });
