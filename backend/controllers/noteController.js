@@ -42,7 +42,6 @@ const noteController = {
             await Note.findOneAndUpdate({_id: req.params.id}, {
                 title,
                 content,
-                date,
                 category
             });
         } catch (err) {

@@ -204,7 +204,7 @@ export default function Home() {
                             <div className="text-wrapper">
                                 <p>{note.content}</p>
                             </div>
-                            <p className="date">{format(note.date)}</p>
+                            <p className="date">Created {format(note.date)}</p>
                             
                             <div className="card-footer">
                                 {note.category}
