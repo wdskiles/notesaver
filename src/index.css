@@ -51,10 +51,7 @@ a {
 
 .sorter {
   position: absolute;
-  top: 12%;
-  left: 50%;
-  transform: translate(-40%, -50%);
-
+  top: 70px;
 }
 
 .sorter p {
